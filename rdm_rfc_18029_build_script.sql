@@ -12,6 +12,16 @@ begin
 
     begin
 
+    execute immediate 'drop index RDM.SQA_TD_DATA_REVEW_ID';
+
+    exception 
+            when others then
+            null;
+    end;
+
+
+    begin
+
     execute immediate 'drop index RDM.SQA_TD_DATA_BATCH';
 
     exception 
@@ -20,9 +30,9 @@ begin
     end;
 
 
-
-
  EXECUTE IMMEDIATE 'CREATE INDEX RDM.SQA_TD_DATA_BATCH ON RDM.SQA_TD_DATA ( CONTRACTOR, REPORT_SEGMENT, COMPLETED_DT)';
+
+ EXECUTE IMMEDIATE 'CREATE INDEX SQA_TD_DATA_REVEW_ID ON SQA_TD_DATA (REVIEW_ID)';
 
 EXCEPTION 
       WHEN OTHERS THEN
@@ -90,8 +100,7 @@ BEGIN
      ,attribute => 'AUTO_DROP'
      ,value     => TRUE);
 
-  SYS.DBMS_SCHEDULER.ENABLE
-    (name                  => 'RDM.ARCH_SQA_DATA');
+--  SYS.DBMS_SCHEDULER.ENABLE   (name                  => 'RDM.ARCH_SQA_DATA');
 END;
 /
 
@@ -156,8 +165,7 @@ BEGIN
      ,attribute => 'AUTO_DROP'
      ,value     => TRUE);
 
-  SYS.DBMS_SCHEDULER.ENABLE
-    (name   => 'RDM.PURGE_SQA_TD_DATA');
+--  SYS.DBMS_SCHEDULER.ENABLE  (name   => 'RDM.PURGE_SQA_TD_DATA');
 END;
 /
 
